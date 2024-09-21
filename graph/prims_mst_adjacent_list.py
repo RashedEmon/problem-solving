@@ -8,15 +8,13 @@ graph = {
 
 def get_min_node(taken_nodes, taken_edges):
     result = None
-    _min = ("X", 1000000)
-    node = None
+    min_weight = float('inf')
+    
     for node in taken_nodes:
-        for edge in graph[node]:
-            if (node, edge[0]) in taken_edges or (edge[0], node) in taken_edges: 
-                continue
-            if edge[1] < _min[1] and edge[0] not in taken_nodes:
-                _min = edge
-                result = node, _min
+        for neighbor, weight in graph[node]:
+            if not ((node, neighbor) in taken_edges or (neighbor, node) in taken_edges) and weight < min_weight and neighbor not in taken_nodes:
+                min_weight = weight
+                result = node, neighbor
     return result
 
 
@@ -29,16 +27,18 @@ def prims_mst(graph, start_node):
     while len(taken_nodes) < total_nodes:
         result = get_min_node(taken_nodes, taken_edges)
         if result:
-            node , min_edge = result
-            taken_edges.add(min_edge)
-            taken_nodes.add(min_edge[0])
+            node , next_node = result
+            taken_edges.add(next_node)
+            taken_nodes.add(next_node)
             
             if node in mst and isinstance(mst[node], list):
-                mst[node].append(min_edge)
+                mst[node].append(next_node)
             else:
-                mst[node] = [min_edge]
+                mst[node] = [next_node]
     return mst
 
 if __name__ == "__main__":
     mst = prims_mst(graph=graph, start_node="A")
-    print(mst)
+    
+    for key, value in mst.items():
+        print(f"{key}-> {','.join(value)}")
