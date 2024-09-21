@@ -17,7 +17,7 @@ def get_min_node(taken_nodes, taken_edges):
                 result = node, neighbor
     return result
 
-
+# Can be improved using priority queue.
 def prims_mst(graph, start_node):
     taken_nodes = set([start_node])
     taken_edges = set()
@@ -42,3 +42,5 @@ if __name__ == "__main__":
     
     for key, value in mst.items():
         print(f"{key}-> {','.join(value)}")
+    # A-> B,D
+    # B-> C,E
