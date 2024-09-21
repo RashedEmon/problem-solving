@@ -6,6 +6,7 @@ graph = {
     'E': [('B', 5), ('C', 7), ('D', 9)]
 }
 
+# Can be improved using priority queue.
 def get_min_node(taken_nodes, taken_edges):
     result = None
     min_weight = float('inf')
@@ -17,7 +18,7 @@ def get_min_node(taken_nodes, taken_edges):
                 result = node, neighbor
     return result
 
-# Can be improved using priority queue.
+
 def prims_mst(graph, start_node):
     taken_nodes = set([start_node])
     taken_edges = set()
